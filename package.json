@@ -1,7 +1,7 @@
 {
   "name": "gulp-nodemon",
-  "version": "0.0.2",
-  "description": "A gulp task that converts hard tabs to spaces.",
+  "version": "0.0.3",
+  "description": "A gulp task that will reload your node script when it changes.",
   "main": "index.js",
   "scripts": {
     "test": "gulp test"
