@@ -1,7 +1,6 @@
 var gulp = require('gulp')
   , jshint = require('gulp-jshint')
   , mocha = require('gulp-mocha')
-  , nodemon = require('./index')
 
 gulp.task('test', function () {
   gulp.src('./test/*-test.js')

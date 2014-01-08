@@ -5,16 +5,16 @@ module.exports = function (settings) {
   return map(function (file, callback) {
     try {
       // Our script
-      var script = nodemon({
+      nodemon({
         script: file.path
       , args: []
       , restartable: 'rs'
       })
-      
+
       // Forward ^C to gulp
-      .on('exit', process.exit.bind(process))
+      process.on('SIGINT', function () { process.exit() })
     } catch (e) { throw e }
-    
+
     callback(null, file)
   })
 }
