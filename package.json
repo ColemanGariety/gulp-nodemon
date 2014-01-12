@@ -18,7 +18,7 @@
     "restart",
     "automatically",
     "watch",
-    "gulpplugin"
+    "gulpfriendly"
   ],
   "author": "Jackson Gariety",
   "license": "BSD-2-Clause",
