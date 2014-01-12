@@ -1,23 +1,36 @@
-var es = require('event-stream')
-  , nodemon = require('nodemon')
+var nodemon = require('nodemon')
   , cli = require('nodemon/lib/cli')
-  , path = require('path')
+  , colors = require('colors')
+  , gulp = require('gulp')
 
 module.exports = function (settings) {
-  settings = settings || ''
+  settings = settings || { script: '', args: '' }
+  options = ['nodemon', settings.script].concat(settings.options.split(' '))
 
-  return es.map(function (file, callback) {
-    var options = ['nodemon', path.resolve(file.path)].concat(settings.split(' '))
+  try {
 
-    try {
-      // Our script
-      options = cli.parse(options)
-      options.restartable = 'rs'
-      nodemon({ script: file.path, args: [], restartable: 'fs' })
-      // Forward ^C back to gulp
-      process.on('SIGINT', function () { process.exit() })
-    } catch (e) { throw e }
+    // Parse settings
+    options = cli.parse(options)
+    options.script = settings.script
 
-    callback(null, file)
-  })
+    // Our script
+    var script = nodemon(options)
+
+    // Forward log messages
+    script.on('log', function (log) {
+      console.log(('[nodemon] ' + log.message).yellow)
+    })
+
+    return {
+      on: function (event, tasks) {
+        script.on(event, function () {
+          gulp.run(tasks)
+        })
+      }
+    , emit: function (event) {
+        script.emit(event)
+      }
+    }
+
+  } catch (e) { throw e }
 }
