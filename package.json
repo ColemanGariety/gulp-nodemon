@@ -1,6 +1,6 @@
 {
   "name": "gulp-nodemon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A gulp task that will reload your node script when it changes.",
   "main": "index.js",
   "scripts": {
@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/JacksonGariety/gulp-nodemon",
   "dependencies": {
-    "map-stream": "0.0.4",
-    "nodemon": "~1.0.1"
+    "nodemon": "~1.0.1",
+    "event-stream": "~3.0.20"
   },
   "devDependencies": {
     "gulp": "~3.2.2",

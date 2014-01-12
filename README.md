@@ -5,9 +5,24 @@ A gulp task that will re-load your node script when it changes. Perfect for deve
 
 ## Usage
 
-### **`nodemon()`**
+### **`nodemon([settings])`**
 
-`nodemon()` returns a stream for use in a streaming system like [gulp.js](http://gulpjs.com).
+You can pass an object to gulp nodemon with two optional settings:
+
+```javascript
+{
+  args: '-e html,js -i foo.js'
+, crash: function (stream) {
+    // 
+  }
+, exit:
+, restart: 
+}
+```
+
+Watch `.html` and `.js` files, but don't watch `foo.js`.
+
+It returns a stream for use in a streaming system like [gulp.js](http://gulpjs.com).
 
 ## Example
 
@@ -22,6 +37,6 @@ var gulp = require('gulp')
 gulp.task('develop', function () {
   gulp.src('./server.js')
       .pipe(jshint())
-      .pipe(nodemon())
+      .pipe(nodemon('-e html,js -i foo.js'))
 })
 ```
