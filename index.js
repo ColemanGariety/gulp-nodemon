@@ -4,7 +4,10 @@ var nodemon = require('nodemon')
   , gulp = require('gulp')
 
 module.exports = function (settings) {
-  settings = settings || { script: '', args: '' }
+  settings = settings || {}
+  settings.script = settings.script || ''
+  settings.options = settings.options || ''
+
   options = ['nodemon', settings.script].concat(settings.options.split(' '))
 
   try {
