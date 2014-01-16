@@ -8,7 +8,7 @@ module.exports = function (settings) {
   settings.script = settings.script || ''
   settings.options = settings.options || ''
 
-  options = ['nodemon', settings.script].concat(settings.options.split(' '))
+  options = ['nodemon', settings.script].concat(settings.options).join(' ');
 
   try {
 
