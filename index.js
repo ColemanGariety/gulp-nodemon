@@ -11,11 +11,6 @@ module.exports = function (settings) {
   options = ['nodemon', settings.script].concat(settings.options).join(' ');
 
   try {
-
-    // Parse settings
-    options = cli.parse(options)
-    options.script = settings.script
-
     // Our script
     var script = nodemon(options)
 
