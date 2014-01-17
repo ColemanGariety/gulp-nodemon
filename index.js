@@ -1,5 +1,4 @@
 var nodemon = require('nodemon')
-  , cli = require('nodemon/lib/cli')
   , colors = require('colors')
   , gulp = require('gulp')
 
