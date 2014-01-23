@@ -1,5 +1,4 @@
 var nodemon = require('nodemon')
-  , cli = require('nodemon/lib/cli')
   , colors = require('colors')
   , gulp = require('gulp')
 
@@ -8,14 +7,9 @@ module.exports = function (settings) {
   settings.script = settings.script || ''
   settings.options = settings.options || ''
 
-  options = ['nodemon', settings.script].concat(settings.options.split(' '))
+  options = ['nodemon', settings.script, settings.options].join(' ');
 
   try {
-
-    // Parse settings
-    options = cli.parse(options)
-    options.script = settings.script
-
     // Our script
     var script = nodemon(options)
 
