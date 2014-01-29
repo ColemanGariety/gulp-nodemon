@@ -16,7 +16,7 @@ You can pass an object to gulp nodemon with two optional settings:
 }
 ```
 
-Watch `.html` and `.js` files, but don't watch `foo.js`.
+Watch `.html` and `.js` files, but don't watch `ignored.js`.
 
 ### **`nodemon().on([event], [tasks])`**
 
