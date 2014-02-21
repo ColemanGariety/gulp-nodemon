@@ -1,7 +1,7 @@
 gulp-nodemon
 ===========
 
-A gulp task that will re-load your node script when it changes. Perfect for development.
+A gulp-friendly nodemon wrapper that will reload your script when things change. Perfect for development.
 
 ## Usage
 
