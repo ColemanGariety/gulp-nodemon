@@ -5,28 +5,25 @@ A gulp task that will re-load your node script when it changes. Perfect for deve
 
 ## Usage
 
-### **`nodemon([settings])`**
+### **`nodemon([options])`**
 
-You can pass an object to gulp nodemon with two optional settings:
+You can pass an object to gulp-nodemon with options [specified in nodemon config](('https://github.com/remy/nodemon/blob/master/doc/sample-nodemon.md')).
 
+Example below will start `server.js` in `development` mode and watch for changes, as well as watch all `.html` and `.js` files in the directory.
 ```javascript
 {
-  options: '-e html,js -i ignored.js'
-, script: './server.js'
+  script: 'server.js'
+, ext: 'js html'
+, env: { 'NODE_ENV': 'development' }
 }
 ```
 
-Watch `.html` and `.js` files, but don't watch `ignored.js`.
+gulp-nodemon returns a stream just like any other NodeJS stream, **except for the `on` method**, which conveniently takes gulp task names to execute.
 
-### **`nodemon().on([event], [tasks])`**
+#### **`.on([event], [tasks])`**
 
-`[event]` is an event name as a string. (see: [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md))
-`[tasks]` A gulp task name as a string or an array of gulp task names. See example beow.
-
-
-### **`nodemon().emit([event])`**
-
-`[event]` (same as above)
+1. `[event]` is an event name as a string. (see: [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md))
+2. `[tasks]` A gulp task name, array of gulp task names, or a function to execute.
 
 ## Example
 
@@ -44,7 +41,7 @@ gulp.task('lint', function () {
 })
 
 gulp.task('develop', function () {
-  nodemon({ script: 'server.js', options: '-e html,js -i ignored.js' })
+  nodemon({ script: 'server.js', ext: 'html js', ignore: ['ignored.js'] })
     .on('restart', ['lint'])
 })
 ```
