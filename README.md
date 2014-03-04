@@ -22,7 +22,7 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 
 #### **`.on([event], [tasks])`**
 
-1. `[event]` is an event name as a string. (see: [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md))
+1. `[event]` is an event name as a string. (see: [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md)
 2. `[tasks]` A gulp task name, array of gulp task names, or a function to execute.
 
 ## Example
