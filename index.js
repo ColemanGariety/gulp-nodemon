@@ -31,7 +31,6 @@ module.exports = function (options) {
         if (tasks instanceof Function) originalOn(event, tasks)
         else {
           originalOn(event, function () {
-            console.log(tasks)
             if (Array.isArray(tasks)) {
               tasks.forEach(function (task) {
                 run(task)
