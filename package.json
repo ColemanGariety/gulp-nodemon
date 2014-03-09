@@ -1,6 +1,6 @@
 {
   "name": "gulp-nodemon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A gulp task that will reload your node script when it changes.",
   "main": "index.js",
   "scripts": {
