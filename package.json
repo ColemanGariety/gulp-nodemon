@@ -1,7 +1,7 @@
 {
   "name": "gulp-nodemon",
   "version": "1.0.2",
-  "description": "A gulp task that will reload your node script when it changes.",
+  "description": "A gulp-friendly nodemon wrapper that restarts your app as you develop, and keeps your build system contained to one process.",
   "main": "index.js",
   "scripts": {
     "test": "gulp test"
