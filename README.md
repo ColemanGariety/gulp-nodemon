@@ -5,7 +5,7 @@ A gulp-friendly nodemon wrapper that will reload your script when things change.
 
 ## Usage
 
-### **`nodemon([options])`**
+### **nodemon([options])**
 
 You can pass an object to gulp-nodemon with options [specified in nodemon config](('https://github.com/remy/nodemon/blob/master/doc/sample-nodemon.md')).
 
@@ -20,9 +20,9 @@ Example below will start `server.js` in `development` mode and watch for changes
 
 gulp-nodemon returns a stream just like any other NodeJS stream, **except for the `on` method**, which conveniently takes gulp task names to execute.
 
-#### **`.on([event], [tasks])`**
+### **.on([event], [tasks])**
 
-1. `[event]` is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md). *I've also added an `.on('change')` event which fires **before** the server restarts so that you can run your compile tasks all within the same gulp process.*
+1. `[event]` is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md). (gulp-nodemon also provides a new event, `'change'`, which fires before the server restarts so that you can run your compile tasks all within the same gulp process.)
 2. `[tasks]` A gulp task name, array of gulp task names, or a function to execute.
 
 ## Example
