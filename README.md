@@ -9,7 +9,7 @@ Perfect for development.
 
 ### **nodemon([options])**
 
-You can pass an object to gulp-nodemon with options [specified in nodemon config](('https://github.com/remy/nodemon/blob/master/doc/sample-nodemon.md')).
+You can pass an object to gulp-nodemon with options [specified in nodemon config](https://github.com/remy/nodemon#config-files).
 
 Example below will start `server.js` in `development` mode and watch for changes, as well as watch all `.html` and `.js` files in the directory.
 ```javascript
