@@ -22,7 +22,7 @@ Example below will start `server.js` in `development` mode and watch for changes
 
 gulp-nodemon returns a stream just like any other NodeJS stream, **except for the `on` method**, which conveniently takes gulp task names to execute.
 
-### **run with debug option**
+### **run nodemon with debug option**
 
 You can also pass the debug flag to nodemone through the `nodeArgs` option
 
@@ -36,6 +36,17 @@ Example below will start `server.js` in `development` with `--debug` flag.
   nodeArgs: ['--debug'] 
 }
 ```
+
+to specify a custom debug port you can pass the option as below
+```javascript
+{ 
+  script: 'app.js', 
+  ext: 'js html', 
+  env: { 'NODE_ENV': 'development' } , 
+  nodeArgs: ['--debug=9999'] 
+}
+```
+
 
 ### **.on([event], [tasks])**
 
