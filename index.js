@@ -11,7 +11,7 @@ module.exports = function (options) {
     , originalOn = script.on  // http://www.youtube.com/watch?v=dKKdJoXF7PI&feature=kp
 
   script.on('log', function (log) {
-    if (log.message === 'restarting due to changes...') nodemon.emit('change')
+    if (log.message.indexOf('change') > -1) nodemon.emit('change');
   })
 
   process.on('exit', script.emit.bind(script, 'exit'))
