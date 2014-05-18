@@ -1,6 +1,6 @@
 {
   "name": "gulp-nodemon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A gulp-friendly nodemon wrapper that restarts your app as you develop, and keeps your build system contained to one process.",
   "main": "index.js",
   "scripts": {
