@@ -29,7 +29,7 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 
 ### **--debug**
 
-You can also pass the debug flag to nodemon through the `nodeArgs` option
+You can also pass the debug flag to node through the `nodeArgs` option
 
 Example below will start `server.js` in `development` with `--debug` flag.
 ```javascript
