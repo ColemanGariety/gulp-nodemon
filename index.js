@@ -1,6 +1,6 @@
 var nodemon = require('nodemon')
-  , colors = require('colors')
   , gulp = require('gulp')
+  , gutil = require('gulp-util')
 
 module.exports = function (options) {
   options = options || {};
@@ -19,7 +19,7 @@ module.exports = function (options) {
 
   // Forward log messages
   script.on('log', function (log) {
-    console.log('[gulp] ' + ('[nodemon] ' + log.message).yellow)
+    gutil.log(gutil.colors.yellow('[nodemon] ' + log.message))
   })
 
   // Shim 'on' for use with gulp tasks
