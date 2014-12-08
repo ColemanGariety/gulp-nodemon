@@ -3,6 +3,7 @@ var nodemon = require('nodemon')
   , gulp = require('gulp')
 
 module.exports = function (options) {
+  options = options || {};
   if (options.exec instanceof Array) options.exec = options.exec.join(' ')
   if (typeof options.exec === 'string') options.exec = 'gulp ' + options.exec
 
