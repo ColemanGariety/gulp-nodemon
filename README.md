@@ -49,7 +49,7 @@ nodeArgs: ['--debug=9999']
 
 ## Example
 
-The following example will run your code with nodemon, lint it when your it change, then log a message when it nodemon runs it again.
+The following example will run your code with nodemon, lint it when you change it, then log a message when nodemon runs it again.
 
 ```javascript
 // Gulpfile.js
