@@ -1,3 +1,5 @@
+"use strict"
+
 var nodemon = require('nodemon')
   , colors = require('colors')
   , gulp = require('gulp')
