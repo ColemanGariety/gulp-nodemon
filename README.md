@@ -1,9 +1,9 @@
 gulp-nodemon
 ===========
 
-A gulp-friendly nodemon wrapper that restarts your app as you develop, and keeps your build system contained to one process.
+A nodemon wrapper for Gulp that keeps your "watch, edit, restart" routine contained to one process.
 
-Perfect for development.
+Best .js dev system ever? ya
 
 ## Usage
 

@@ -15,8 +15,14 @@ gulp.task('lint', function () {
 
 gulp.task('test', ['lint'], function () {
   nodemon({
-      script: './test/server.coffee'
+      script: './test/server.js'
+    , verbose: true
+    , env: {
+        'NODE_ENV': 'development'
+      }
+    , watch: './'
     , ext: 'js coffee'
+    // , nodeArgs: ['--debug']
     })
     .on('restart', 'lint')
 })
