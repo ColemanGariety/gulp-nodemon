@@ -29,26 +29,28 @@ Nodemon is powerful but lacks the ability to compile/cleanup code prior to resta
 ### **{ tasks: [Array || Function(changedFiles)] }**
 
 If you want to lint your code when you make changes that's easy to do with a simple event. But what if you need to wait while your project re-builds before you start it up again? This isn't possible with vanilla nodemon, and can be tedious to implement yourself, but it's easy with gulp-nodemon:
-
-    nodemon({
-      script: 'index.js'
-    , tasks: ['browserify']
-    })
+```javascript
+nodemon({
+  script: 'index.js'
+, tasks: ['browserify']
+})
+```
 
 What if you want to decouple your build processes by language? Or even by file? Easy, just set the `tasks` option to a function. Gulp-nodemon will pass you the list of changed files and it'll let you return a list of tasks you want run.
-
-    nodemon({
-      script: './index.js'
-    , ext: 'js css'
-    , tasks: function (changedFiles) {
-        var tasks = []
-        files.forEach(function (file) {
-          if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
-          if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
-        })
-        return tasks
-      }
+```javascript
+nodemon({
+  script: './index.js'
+, ext: 'js css'
+, tasks: function (changedFiles) {
+    var tasks = []
+    files.forEach(function (file) {
+      if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
+      if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
     })
+    return tasks
+  }
+})
+```
 
 ## Events
 
