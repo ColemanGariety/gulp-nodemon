@@ -1,7 +1,7 @@
 gulp-nodemon
 ===========
 
-it's nodemon + gulp + convenience
+it's gulp + nodemon + convenience
 
 ## Usage
 
