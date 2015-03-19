@@ -1,7 +1,7 @@
 gulp-nodemon
 ===========
 
-ch
+it's nodemon + gulp + convenience
 
 ## Usage
 
