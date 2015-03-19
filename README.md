@@ -1,7 +1,7 @@
 gulp-nodemon
 ===========
 
-it's nodemon + gulp + convenience
+ch
 
 ## Usage
 
@@ -56,7 +56,7 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 
 ### **.on([event], [Array || Function])**
 
-1. `[event]` is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md). (gulp-nodemon also provides a new event, `'change'`, which fires before the server restarts so that you can run your compile tasks all within the same gulp process.)
+1. `[event]` is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md).
 2. `[tasks]` An array of gulp task names or a function to execute.
 
 ## Example
