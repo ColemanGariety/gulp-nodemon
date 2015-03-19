@@ -1,6 +1,7 @@
 var gulp = require('gulp')
   , jshint = require('gulp-jshint')
   , nodemon = require('./index')
+  , path = require('path')
 
 // gulp.task('test', function () {
 //   gulp.src('./test/*-test.js')
@@ -13,6 +14,12 @@ gulp.task('lint', function () {
     .pipe(jshint())
 })
 
+gulp.task('cssmin', function () { /* void */ })
+
+gulp.task('afterstart', function () {
+  console.log('proc has finished restarting!')
+})
+
 gulp.task('test', ['lint'], function () {
   nodemon({
       script: './test/server.js'
@@ -22,7 +29,16 @@ gulp.task('test', ['lint'], function () {
       }
     , watch: './'
     , ext: 'js coffee'
+    , tasks: ['lint']
+    // , tasks: function (files) {
+    //     var tasks = []
+    //     files.forEach(function (file) {
+    //       if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
+    //       if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
+    //     })
+    //     return tasks
+    //   }
     // , nodeArgs: ['--debug']
     })
-    .on('restart', 'lint')
+    .on('restart', 'cssmin')
 })
