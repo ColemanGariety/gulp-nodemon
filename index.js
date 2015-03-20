@@ -20,6 +20,7 @@ module.exports = function (options) {
     script.on('log', function (log) {
       if (~log.message.indexOf('files triggering change check')) {
         if (typeof options.tasks === 'function') run(options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
+        else run(options.tasks)
       }
     })
   } else {
