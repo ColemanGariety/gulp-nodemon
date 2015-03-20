@@ -19,8 +19,7 @@ module.exports = function (options) {
   if (options.verbose) {
     script.on('log', function (log) {
       if (~log.message.indexOf('files triggering change check')) {
-        if (typeof options.tasks === 'function') options.tasks = options.tasks(log.message.split('files triggering change check: ').pop().split(' '))
-        run(options.tasks)
+        if (typeof options.tasks === 'function') run(options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
       }
     })
   } else {
