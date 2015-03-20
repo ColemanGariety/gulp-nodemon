@@ -16,19 +16,21 @@ module.exports = function (options) {
     , originalOn = script.on
 
   // Allow for injection of tasks on file change
-  if (options.verbose) {
-    script.on('log', function (log) {
-      if (~log.message.indexOf('files triggering change check')) {
-        if (typeof options.tasks === 'function') run(options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
-        else run(options.tasks)
-      }
-    })
-  } else {
-    script.on('log', function (log) {
-      if (~log.message.indexOf('restarting due to changes...')) {
-        run(options.tasks)
-      }
-    })
+  if (options.tasks) {
+    if (options.verbose) {
+      script.on('log', function (log) {
+        if (~log.message.indexOf('files triggering change check')) {
+          if (typeof options.tasks === 'function') run(options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
+          else run(options.tasks)
+        }
+      })
+    } else {
+      script.on('log', function (log) {
+        if (~log.message.indexOf('restarting due to changes...')) {
+          run(options.tasks)
+        }
+      })
+    }
   }
 
   // Capture ^C

@@ -30,14 +30,14 @@ gulp.task('test', ['lint'], function () {
     , watch: './'
     , ext: 'js coffee'
     // , tasks: ['lint']
-    , tasks: function (files) {
-        var tasks = []
-        files.forEach(function (file) {
-          if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
-          if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
-        })
-        return tasks
-      }
+    // , tasks: function (files) {
+    //     var tasks = []
+    //     files.forEach(function (file) {
+    //       if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
+    //       if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
+    //     })
+    //     return tasks
+    //   }
     // , nodeArgs: ['--debug']
     })
     .on('restart', 'cssmin')
