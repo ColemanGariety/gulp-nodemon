@@ -24,6 +24,8 @@ gulp.task('start', function () {
 
 ## Synchronous Build Tasks
 
+*NOTE: This feature requires Node v0.12 because of `child_process.spawnSync`.*
+
 Nodemon is powerful but lacks the ability to compile/cleanup code prior to restarting the application... until now! Most build systems can never be complete without compilation, and now it works harmoniously with your nodemon loop.
 
 ### **{ tasks: [Array || Function(changedFiles)] }**
