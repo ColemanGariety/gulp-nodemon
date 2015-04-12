@@ -45,7 +45,7 @@ nodemon({
 , ext: 'js css'
 , tasks: function (changedFiles) {
     var tasks = []
-    files.forEach(function (file) {
+    changedFiles.forEach(function (file) {
       if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
       if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
     })
