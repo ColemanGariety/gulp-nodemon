@@ -7,8 +7,6 @@ var nodemon = require('nodemon')
 
 module.exports = function (options) {
   options = options || {};
-  if (options.exec instanceof Array) options.exec = options.exec.join(' ')
-  if (typeof options.exec === 'string') options.exec = 'gulp ' + options.exec
   if (typeof options.tasks === 'function') options.verbose = true // Enable verbose mode if file change list is needed
 
   // Our script
