@@ -70,6 +70,7 @@ module.exports = function (options) {
   // Synchronous alternative to gulp.run()
   function run(tasks) {
     if (typeof tasks === 'string') tasks = [tasks]
+    if (tasks.length === 0) return
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
     cp.spawnSync('gulp', tasks, { stdio: [0, 1, 2] })
   }
