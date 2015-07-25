@@ -3,6 +3,12 @@ gulp-nodemon
 
 it's gulp + nodemon + convenience
 
+## Install 
+
+```bash
+$ npm install --save-dev gulp-nodemon
+```
+
 ## Usage
 
 Gulp-nodemon looks almost exactly like regular nodemon, but it's made for use with gulp tasks.
