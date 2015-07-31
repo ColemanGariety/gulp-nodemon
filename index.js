@@ -71,6 +71,6 @@ module.exports = function (options) {
   function run(tasks) {
     if (typeof tasks === 'string') tasks = [tasks]
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
-    cp.spawnSync('gulp', tasks, { stdio: [0, 1, 2] })
+    cp.spawnSync(process.platform === 'win32' ? 'gulp.cmd' : 'gulp', tasks, { stdio: [0, 1, 2] })
   }
 }
