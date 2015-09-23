@@ -32,7 +32,12 @@ module.exports = function (options) {
   }
 
   // Capture ^C
-  process.on('exit', script.emit.bind(script, 'exit'))
+  var exitHandler = function (options) {
+    if (options.exit) script.emit('exit')
+    if (options.quit) process.exit(0)
+  }
+  process.once('exit', exitHandler.bind(null, { exit: true }))
+  process.once('SIGINT', exitHandler.bind(null, { quit: true }))
 
   // Forward log messages and stdin
   script.on('log', function (log) {
