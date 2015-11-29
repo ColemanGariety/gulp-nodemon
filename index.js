@@ -21,9 +21,11 @@ module.exports = function (options) {
     bus.removeAllListeners('restart');
 
     // Place our listener in first position
-    bus.on('restart', function () {
+    bus.on('restart', function (files) {
       nodemonLog("running tasks...")
-      run(options.tasks)
+
+      if (typeof options.tasks === 'function') run(options.tasks(files))
+      else run(options.tasks)
     })
 
     // Re-add all other listeners
