@@ -22,7 +22,7 @@ module.exports = function (options) {
 
     // Place our listener in first position
     bus.on('restart', function (files) {
-      nodemonLog("running tasks...")
+      if (!options.quiet) nodemonLog("running tasks...")
 
       if (typeof options.tasks === 'function') run(options.tasks(files))
       else run(options.tasks)
