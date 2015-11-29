@@ -8,7 +8,6 @@ var nodemon = require('nodemon')
 
 module.exports = function (options) {
   options = options || {};
-  if (typeof options.tasks === 'function') options.verbose = true // Enable verbose mode if file change list is needed
 
   // Our script
   var script = nodemon(options)
