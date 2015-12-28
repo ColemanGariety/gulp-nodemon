@@ -1,6 +1,6 @@
 {
   "name": "gulp-nodemon",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "it's gulp + nodemon + convenience",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "restart",
     "automatically",
     "watch",
-    "gulpfriendly"
+    "gulpfriendly,"
+    "gulpplugin"
   ],
   "author": "Jackson Gariety",
   "license": "BSD-2-Clause",
