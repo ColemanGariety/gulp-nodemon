@@ -94,3 +94,43 @@ gulp.task('develop', function () {
     })
 })
 ```
+
+## Using `gulp-nodemon` with React, Browserify, Babel, ES2015, etc.
+
+Gulp-nodemon is made to work with the "groovy" new tools like Babel, JSX, and other JavaScript compilers/bundlers/transpilers.
+
+In gulp-nodemon land, you'll want one task for compilation that uses an on-disk cache (e.g. `gulp-file-cache`, `gulp-cache-money`) along with your bundler (e.g. `gulp-babel`, `gulp-react`, etc.). Then you'll put `nodemon({})` in another task and pass the entire compile task in your config:
+
+```javascript
+var gulp = require('gulp')
+  , nodemon = require('gulp-nodemon')
+  , babel = require('gulp-babel')
+  , Cache = require('gulp-file-cache')
+
+var cache = new Cache();
+
+gulp.task('compile', function () {
+  var stream = gulp.src('./src/**/*.js') // your ES2015 code
+                   .pipe(cache.filter()) // remember files
+                   .pipe(babel({ ... })) // compile new ones
+                   .pipe(cache.cache()) // cache them
+                   .pipe(gulp.dest('./dist')) // write them
+  return stream // important for gulp-nodemon to wait for completion
+})
+
+gulp.task('watch', ['compile'], function () {
+  var stream = nodemon({
+                 script: 'dist/' // run ES5 code
+               , watch: 'src' // watch ES2015 code
+               , tasks: ['compile'] // compile synchronously onChange
+               })
+
+  return stream
+})
+```
+
+The cache keeps your development flow moving quickly and the `return stream` line ensure that your tasks get run in order. If you want them to run async, just remove that line.
+
+## Using `gulp-nodemon` with `browser-sync`
+
+Some people want to use `browser-sync`. That's totally fine, just start browser sync in the same task as `nodemon({})` and use gulp-nodemon's `.on('start', function () {})` to trigger browser-sync. Don't use the `.on('restart')` event because it will fire before your app is up and running.
