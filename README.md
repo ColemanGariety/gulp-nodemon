@@ -69,7 +69,9 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 1. `[event]` is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md).
 2. `[tasks]` An array of gulp task names or a function to execute.
 
-## Example
+## Examples
+
+### Basic Usage
 
 The following example will run your code with nodemon, lint it when you make changes, and log a message when nodemon runs it again.
 
@@ -92,6 +94,46 @@ gulp.task('develop', function () {
     .on('restart', function () {
       console.log('restarted!')
     })
+})
+```
+
+### Bunyan Logger integration
+
+The [bunyan](https://github.com/trentm/node-bunyan/) logger includes a `bunyan` script that beautifies JSON logging when piped to it. Here's how you can you can pipe your output to `bunyan` when using `gulp-nodemon`:
+
+```javascript
+gulp.task('run', ['default', 'watch'], function() {
+    var nodemon = require('gulp-nodemon'),
+        spawn   = require('child_process').spawn,
+        bunyan
+
+    nodemon({
+        script: paths.server,
+        ext:    'js json',
+        ignore: [
+            'var/',
+            'node_modules/'
+        ],
+        watch:    [paths.etc, paths.src],
+        stdout:   false,
+        readable: false
+    })
+    .on('readable', function() {
+
+        // free memory
+        bunyan && bunyan.kill()
+
+        bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
+            '--output', 'short',
+            '--color'
+        ])
+
+        bunyan.stdout.pipe(process.stdout)
+        bunyan.stderr.pipe(process.stderr)
+
+        this.stdout.pipe(bunyan.stdin)
+        this.stderr.pipe(bunyan.stdin)
+    });
 })
 ```
 
