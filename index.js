@@ -11,6 +11,7 @@ module.exports = function (options) {
 
   // Our script
   var script = nodemon(options)
+    , gulpCmd = options.gulpCmd || (process.platform === 'win32' ? 'gulp.cmd' : 'gulp')
     , originalOn = script.on
 
   // Allow for injection of tasks on file change
@@ -18,14 +19,14 @@ module.exports = function (options) {
     if (options.verbose) {
       script.on('log', function (log) {
         if (~log.message.indexOf('files triggering change check')) {
-          if (typeof options.tasks === 'function') run(options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
-          else run(options.tasks)
+          if (typeof options.tasks === 'function') run(gulpCmd, options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
+          else run(gulpCmd, options.tasks)
         }
       })
     } else {
       script.on('log', function (log) {
         if (~log.message.indexOf('restarting due to changes...')) {
-          run(options.tasks)
+          run(gulpCmd, options.tasks)
         }
       })
     }
@@ -58,9 +59,9 @@ module.exports = function (options) {
             originalOn(event, function () {
               if (Array.isArray(tasks)) {
                 tasks.forEach(function (task) {
-                  run(task)
+                  run(gulpCmd, task)
                 })
-              } else run(tasks)
+              } else run(gulpCmd, tasks)
             })
           }
         }(tasks[i])
@@ -73,10 +74,10 @@ module.exports = function (options) {
   return script
 
   // Synchronous alternative to gulp.run()
-  function run(tasks) {
+  function run(gulpCmd, tasks) {
     if (typeof tasks === 'string') tasks = [tasks]
     if (tasks.length === 0) return
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
-    cp.spawnSync(process.platform === 'win32' ? 'gulp.cmd' : 'gulp', tasks, { stdio: [0, 1, 2] })
+    cp.spawnSync(gulpCmd, tasks, { stdio: [0, 1, 2] })
   }
 }
