@@ -60,6 +60,17 @@ nodemon({
 })
 ```
 
+### **{ gulpCmd: string }**
+
+Gulp-nodemon spawns new instance of gulp to execute `tasks` option and it is working fine as long as gulp is installed globaly. If not you are able to provide gulp command as `gulpCmd` parameter.
+```javascript
+nodemon({
+  script: 'index.js'
+, gulpCmd: './node_modules/.bin/gulp'
+, tasks: ['browserify']
+})
+```
+
 ## Events
 
 gulp-nodemon returns a stream just like any other NodeJS stream, **except for the `on` method**, which conveniently accepts gulp task names in addition to the typical function.
