@@ -4,30 +4,32 @@ var nodemon = require('nodemon')
   , colors = require('colors')
   , gulp = require('gulp')
   , cp = require('child_process')
+  , bus = require('nodemon/lib/utils/bus')
 
 module.exports = function (options) {
   options = options || {};
-  if (typeof options.tasks === 'function') options.verbose = true // Enable verbose mode if file change list is needed
 
   // Our script
   var script = nodemon(options)
     , originalOn = script.on
+    , originalListeners = bus.listeners('restart')
 
   // Allow for injection of tasks on file change
   if (options.tasks) {
-    if (options.verbose) {
-      script.on('log', function (log) {
-        if (~log.message.indexOf('files triggering change check')) {
-          if (typeof options.tasks === 'function') run(options.tasks(log.message.split('files triggering change check: ').pop().split(' ')))
-          else run(options.tasks)
-        }
-      })
-    } else {
-      script.on('log', function (log) {
-        if (~log.message.indexOf('restarting due to changes...')) {
-          run(options.tasks)
-        }
-      })
+    // Remove all 'restart' listeners
+    bus.removeAllListeners('restart');
+
+    // Place our listener in first position
+    bus.on('restart', function (files) {
+      if (!options.quiet) nodemonLog("running tasks...")
+
+      if (typeof options.tasks === 'function') run(options.tasks(files))
+      else run(options.tasks)
+    })
+
+    // Re-add all other listeners
+    for (var i = 0; i < originalListeners.length; i++) {
+      bus.on('restart', originalListeners[i])
     }
   }
 
@@ -41,9 +43,9 @@ module.exports = function (options) {
 
   // Forward log messages and stdin
   script.on('log', function (log) {
-    console.log('[' + new Date().toString().split(' ')[4].gray + '] ' + ('[nodemon] ' + log.message).yellow)
+    nodemonLog(log.message)
   })
-  
+
   // Shim 'on' for use with gulp tasks
   script.on = function (event, tasks) {
     var tasks = Array.prototype.slice.call(arguments)
@@ -79,4 +81,8 @@ module.exports = function (options) {
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
     cp.spawnSync(process.platform === 'win32' ? 'gulp.cmd' : 'gulp', tasks, { stdio: [0, 1, 2] })
   }
+}
+
+function nodemonLog(message) {
+  console.log('[' + new Date().toString().split(' ')[4].gray + '] ' + ('[nodemon] ' + message).yellow)
 }
