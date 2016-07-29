@@ -28,17 +28,17 @@
   },
   "homepage": "https://github.com/JacksonGariety/gulp-nodemon",
   "dependencies": {
-    "gulp": "^3.8.11",
-    "nodemon": "^1.9.2",
-    "event-stream": "^3.2.1",
-    "colors": "^1.0.3"
+    "gulp": "github:gulpjs/gulp#4.0",
+    "nodemon": "^1.10.0",
+    "event-stream": "^3.3.4",
+    "colors": "^1.1.2"
   },
   "devDependencies": {
-    "should": "^4.0.0",
-    "gulp-jshint": "^1.6.1",
-    "gulp-mocha": "^0.2.0",
-    "is-running": "^1.0.3",
-    "coffee-script": "^1.7.1"
+    "should": "^10.0.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-mocha": "^2.2.0",
+    "is-running": "^2.0.0",
+    "coffee-script": "^1.10.0"
   },
   "directories": {
     "test": "test"

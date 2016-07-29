@@ -10,7 +10,7 @@ var gulp = require('gulp')
 // })
 
 gulp.task('lint', function () {
-  gulp.src('./*/**.js')
+  return gulp.src('./*/**.js')
     .pipe(jshint())
 })
 
@@ -20,7 +20,7 @@ gulp.task('afterstart', function () {
   console.log('proc has finished restarting!')
 })
 
-gulp.task('test', ['lint'], function () {
+gulp.task('test', gulp.series(['lint']), function () {
   nodemon({
       script: './test/server.js'
     , verbose: true
