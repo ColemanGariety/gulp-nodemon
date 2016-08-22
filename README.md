@@ -69,6 +69,10 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 1. `[event]` is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md).
 2. `[tasks]` An array of gulp task names or a function to execute.
 
+### **.emit(event, [Number])**
+1. `event`   is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md#using-nodemon-events).
+2. `timeout` is an _optional_ delay, in seconds, to emit `event`. 
+
 ## Examples
 
 ### Basic Usage
@@ -87,13 +91,19 @@ gulp.task('lint', function () {
 })
 
 gulp.task('develop', function () {
-  nodemon({ script: 'server.js'
+  var stream = nodemon({ script: 'server.js'
           , ext: 'html js'
           , ignore: ['ignored.js']
           , tasks: ['lint'] })
-    .on('restart', function () {
-      console.log('restarted!')
-    })
+          
+  stream
+      .on('restart', function () {
+        console.log('restarted!')
+      })
+      .on('crash', function() {
+        console.error('Application has crashed!\n')
+         stream.emit('restart', 10)  // restart the server in 10 seconds
+      })
 })
 ```
 

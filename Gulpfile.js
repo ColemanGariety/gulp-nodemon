@@ -21,7 +21,7 @@ gulp.task('afterstart', function () {
 })
 
 gulp.task('test', ['lint'], function () {
-  nodemon({
+  var stream = nodemon({
       script: './test/server.js'
     , verbose: true
     , env: {
@@ -40,5 +40,11 @@ gulp.task('test', ['lint'], function () {
     //   }
     // , nodeArgs: ['--debug']
     })
+
+  stream
     .on('restart', 'cssmin')
+    .on('crash', function (){
+      console.error('Application has crashed!\n')
+      stream.emit('restart', 2)
+    })
 })
