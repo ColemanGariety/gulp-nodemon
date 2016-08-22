@@ -1,7 +1,7 @@
-var gulp = require('gulp')
-  , jshint = require('gulp-jshint')
+var gulp    = require('gulp')
+  , jshint  = require('gulp-jshint')
   , nodemon = require('./index')
-  , path = require('path')
+//  , path = require('path')
 
 // gulp.task('test', function () {
 //   gulp.src('./test/*-test.js')
@@ -9,26 +9,27 @@ var gulp = require('gulp')
 //     .pipe(mocha({ ui: 'bdd' }))
 // })
 
-gulp.task('lint', function () {
+gulp.task('lint', function (){
   gulp.src('./*/**.js')
     .pipe(jshint())
 })
 
-gulp.task('cssmin', function () { /* void */ })
+gulp.task('cssmin', function (){ /* void */
+})
 
-gulp.task('afterstart', function () {
+gulp.task('afterstart', function (){
   console.log('proc has finished restarting!')
 })
 
-gulp.task('test', ['lint'], function () {
+gulp.task('test', ['lint'], function (){
   nodemon({
-      script: './test/server.js'
+    script   : './test/server.js'
     , verbose: true
-    , env: {
-        'NODE_ENV': 'development'
-      }
-    , watch: './'
-    , ext: 'js coffee'
+    , env    : {
+      'NODE_ENV': 'development'
+    }
+    , watch  : './'
+    , ext    : 'js coffee'
     // , tasks: ['lint']
     // , tasks: function (files) {
     //     var tasks = []
@@ -39,6 +40,6 @@ gulp.task('test', ['lint'], function () {
     //     return tasks
     //   }
     // , nodeArgs: ['--debug']
-    })
+  })
     .on('restart', 'cssmin')
 })
