@@ -70,7 +70,7 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 2. `[tasks]` An array of gulp task names or a function to execute.
 
 ### **.emit(event, [Number])**
-1. `event`   is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md).
+1. `event`   is an event name as a string. See [nodemon events](https://github.com/remy/nodemon/blob/master/doc/events.md#using-nodemon-events).
 2. `timeout` is an _optional_ delay, in seconds, to emit `event`. 
 
 ## Examples
