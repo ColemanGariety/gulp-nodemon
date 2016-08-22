@@ -21,9 +21,9 @@ gulp.task('afterstart', function (){
   console.log('proc has finished restarting!')
 })
 
-gulp.task('test', ['lint'], function (){
-  nodemon({
-    script   : './test/server.js'
+gulp.task('test', ['lint'], function () {
+  var stream = nodemon({
+      script: './test/server.js'
     , verbose: true
     , env    : {
       'NODE_ENV': 'development'
@@ -41,5 +41,11 @@ gulp.task('test', ['lint'], function (){
     //   }
     // , nodeArgs: ['--debug']
   })
+
+  stream
     .on('restart', 'cssmin')
+    .on('crash', function (){
+      console.error('Application has crashed!\n')
+      stream.emit('restart', 2)
+    })
 })
