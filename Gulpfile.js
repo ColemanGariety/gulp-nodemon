@@ -23,7 +23,8 @@ gulp.task('afterstart', function (){
 
 gulp.task('test', ['lint'], function () {
   var stream = nodemon({
-      script: './test/server.js'
+      nodemon: require('nodemon')
+    , script: './test/server.js'
     , verbose: true
     , env    : {
       'NODE_ENV': 'development'
