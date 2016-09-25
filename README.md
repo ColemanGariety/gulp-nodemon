@@ -18,7 +18,7 @@ Gulp-nodemon looks almost exactly like regular nodemon, but it's made for use wi
 You can pass an object to gulp-nodemon with options [like you would in nodemon config](https://github.com/remy/nodemon#config-files).
 
 Example below will start `server.js` in `development` mode and watch for changes, as well as watch all `.html` and `.js` files in the directory.
-```javascript
+```js
 gulp.task('start', function () {
   nodemon({
     script: 'server.js'
@@ -37,7 +37,7 @@ Nodemon is powerful but lacks the ability to compile/cleanup code prior to resta
 ### **{ tasks: [Array || Function(changedFiles)] }**
 
 If you want to lint your code when you make changes that's easy to do with a simple event. But what if you need to wait while your project re-builds before you start it up again? This isn't possible with vanilla nodemon, and can be tedious to implement yourself, but it's easy with gulp-nodemon:
-```javascript
+```js
 nodemon({
   script: 'index.js'
 , tasks: ['browserify']
@@ -45,7 +45,7 @@ nodemon({
 ```
 
 What if you want to decouple your build processes by language? Or even by file? Easy, just set the `tasks` option to a function. Gulp-nodemon will pass you the list of changed files and it'll let you return a list of tasks you want run.
-```javascript
+```js
 nodemon({
   script: './index.js'
 , ext: 'js css'
@@ -79,7 +79,7 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 
 The following example will run your code with nodemon, lint it when you make changes, and log a message when nodemon runs it again.
 
-```javascript
+```js
 // Gulpfile.js
 var gulp = require('gulp')
   , nodemon = require('gulp-nodemon')
@@ -107,11 +107,19 @@ gulp.task('develop', function () {
 })
 ```
 
+_**You can also plug an external version or fork of nodemon**_
+```js
+gulp.task('pluggable', function() {
+  nodemon({ nodemon: require('nodemon'),
+            script: 'server.js'})
+})
+```
+
 ### Bunyan Logger integration
 
 The [bunyan](https://github.com/trentm/node-bunyan/) logger includes a `bunyan` script that beautifies JSON logging when piped to it. Here's how you can you can pipe your output to `bunyan` when using `gulp-nodemon`:
 
-```javascript
+```js
 gulp.task('run', ['default', 'watch'], function() {
     var nodemon = require('gulp-nodemon'),
         spawn   = require('child_process').spawn,
@@ -153,7 +161,7 @@ Gulp-nodemon is made to work with the "groovy" new tools like Babel, JSX, and ot
 
 In gulp-nodemon land, you'll want one task for compilation that uses an on-disk cache (e.g. `gulp-file-cache`, `gulp-cache-money`) along with your bundler (e.g. `gulp-babel`, `gulp-react`, etc.). Then you'll put `nodemon({})` in another task and pass the entire compile task in your config:
 
-```javascript
+```js
 var gulp = require('gulp')
   , nodemon = require('gulp-nodemon')
   , babel = require('gulp-babel')
