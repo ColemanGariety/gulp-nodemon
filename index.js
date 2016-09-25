@@ -1,27 +1,27 @@
 'use strict'
 
 var nodemon = require('nodemon')
-  , colors = require('colors')
-  , gulp = require('gulp')
-  , cp = require('child_process')
-  , bus = require('nodemon/lib/utils/bus')
+  , colors  = require('colors')
+  , gulp    = require('gulp')
+  , cp      = require('child_process')
+  , bus     = require('nodemon/lib/utils/bus')
 
-module.exports = function (options) {
+module.exports = function (options){
   options = options || {};
 
   // Our script
-  var script = nodemon(options)
-    , originalOn = script.on
+  var script            = nodemon(options)
+    , originalOn        = script.on
     , originalListeners = bus.listeners('restart')
 
   // Allow for injection of tasks on file change
   if (options.tasks) {
     // Remove all 'restart' listeners
-    bus.removeAllListeners('restart');
+    bus.removeAllListeners('restart')
 
     // Place our listener in first position
-    bus.on('restart', function (files) {
-      if (!options.quiet) nodemonLog("running tasks...")
+    bus.on('restart', function (files){
+      if (!options.quiet) nodemonLog('running tasks...')
 
       if (typeof options.tasks === 'function') run(options.tasks(files))
       else run(options.tasks)
@@ -34,7 +34,7 @@ module.exports = function (options) {
   }
 
   // Capture ^C
-  var exitHandler = function (options) {
+  var exitHandler = function (options){
     if (options.exit) script.emit('exit')
     if (options.quit) process.exit(0)
   }
@@ -42,24 +42,24 @@ module.exports = function (options) {
   process.once('SIGINT', exitHandler.bind(null, { quit: true }))
 
   // Forward log messages and stdin
-  script.on('log', function (log) {
+  script.on('log', function (log){
     nodemonLog(log.message)
   })
 
   // Shim 'on' for use with gulp tasks
-  script.on = function (event, tasks) {
+  script.on = function (event, tasks){
     var tasks = Array.prototype.slice.call(arguments)
       , event = tasks.shift()
 
     if (event === 'change') script.changeTasks = tasks
     else {
       for (var i = 0; i < tasks.length; i++) {
-        void function (tasks) {
+        void function (tasks){
           if (tasks instanceof Function) originalOn(event, tasks)
           else {
-            originalOn(event, function () {
+            originalOn(event, function (){
               if (Array.isArray(tasks)) {
-                tasks.forEach(function (task) {
+                tasks.forEach(function (task){
                   run(task)
                 })
               } else run(tasks)
@@ -75,7 +75,7 @@ module.exports = function (options) {
   return script
 
   // Synchronous alternative to gulp.run()
-  function run(tasks) {
+  function run(tasks){
     if (typeof tasks === 'string') tasks = [tasks]
     if (tasks.length === 0) return
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
@@ -83,6 +83,6 @@ module.exports = function (options) {
   }
 }
 
-function nodemonLog(message) {
+function nodemonLog(message){
   console.log('[' + new Date().toString().split(' ')[4].gray + '] ' + ('[nodemon] ' + message).yellow)
 }
