@@ -1,6 +1,6 @@
 'use strict'
 
-var nodemon = require('nodemon')
+var nodemon
   , colors  = require('colors')
   , gulp    = require('gulp')
   , cp      = require('child_process')
@@ -8,6 +8,13 @@ var nodemon = require('nodemon')
 
 module.exports = function (options){
   options = options || {};
+
+  // plug nodemon
+  if (options.nodemon && typeof options.nodemon === 'function') {
+    nodemon = options.nodemon;
+    delete options.nodemon
+  } else
+    nodemon = require('nodemon');
 
   // Our script
   var script            = nodemon(options)
@@ -96,7 +103,7 @@ module.exports = function (options){
   return script
 
   // Synchronous alternative to gulp.run()
-  function run(tasks){
+  function run(tasks) {
     if (typeof tasks === 'string') tasks = [tasks]
     if (tasks.length === 0) return
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
