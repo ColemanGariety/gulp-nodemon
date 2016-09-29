@@ -26,27 +26,20 @@ gulp.task('test', ['lint'], function () {
       nodemon: require('nodemon')
     , script: './test/server.js'
     , verbose: true
-    , env    : {
-      'NODE_ENV': 'development'
-    }
-    , watch  : './'
-    , ext    : 'js coffee'
-    // , tasks: ['lint']
-    // , tasks: function (files) {
-    //     var tasks = []
-    //     files.forEach(function (file) {
-    //       if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
-    //       if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
-    //     })
-    //     return tasks
-    //   }
-    // , nodeArgs: ['--debug']
+    , env: {
+        'NODE_ENV': 'development'
+      }
+    , watch: './'
+    , ext: 'js coffee'
   })
 
   stream
     .on('restart', 'cssmin')
     .on('crash', function (){
-      console.error('Application has crashed!\n')
-      stream.emit('restart', 2)
+      console.error('\nApplication has crashed!\n')
+      console.error('Restarting in 2 seconds...\n')
+      setTimeout(function () {
+        stream.emit('restart')
+      }, 2000)
     })
 })

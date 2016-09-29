@@ -13,13 +13,13 @@ module.exports = function (options){
   if (options.nodemon && typeof options.nodemon === 'function') {
     nodemon = options.nodemon;
     delete options.nodemon
-  } else
+  } else {
     nodemon = require('nodemon');
+  }
 
   // Our script
   var script            = nodemon(options)
     , originalOn        = script.on
-    , originalEmit      = script.emit
     , originalListeners = bus.listeners('restart')
 
   // Allow for injection of tasks on file change
@@ -59,12 +59,14 @@ module.exports = function (options){
     var tasks = Array.prototype.slice.call(arguments)
       , event = tasks.shift()
 
-    if (event === 'change') script.changeTasks = tasks
-    else {
+    if (event === 'change') {
+      script.changeTasks = tasks
+    } else {
       for (var i = 0; i < tasks.length; i++) {
         void function (tasks){
-          if (tasks instanceof Function) originalOn(event, tasks)
-          else {
+          if (tasks instanceof Function) {
+            originalOn(event, tasks)
+          } else {
             originalOn(event, function (){
               if (Array.isArray(tasks)) {
                 tasks.forEach(function (task){
@@ -78,26 +80,6 @@ module.exports = function (options){
     }
 
     return script
-  }
-
-  // Shim 'emit' for use with gulp
-  script.emit = function (event, timeoutInSecs){
-    if (typeof event !== 'string')
-      throw new Error('Event must be a string!')
-
-    if (!timeoutInSecs) {
-      console.info('restarting')
-      originalEmit(event)
-    }
-
-    else if (typeof timeoutInSecs !== 'number')
-      throw new Error('Timeout must be a number!')
-    else {
-      console.info('restarting in ' + timeoutInSecs + 'secs')
-      setTimeout(function (){
-        originalEmit(event)
-      }, timeoutInSecs * 1000)
-    }
   }
 
   return script
