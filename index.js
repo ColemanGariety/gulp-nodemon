@@ -20,6 +20,7 @@ module.exports = function (options) {
   // Our script
   var script            = nodemon(options)
     , originalOn        = script.on
+    , originalEmit        = script.emit
     , originalListeners = bus.listeners('restart')
 
   // Allow for injection of tasks on file change
@@ -76,6 +77,28 @@ module.exports = function (options) {
             })
           }
         }(tasks[i])
+      }
+    }
+
+    script.nodemon = {
+      // Shim 'emit' for use with gulp
+      emit: function (event, timeout){
+        if (typeof event !== 'string')
+          throw new Error('Event must be a string!')
+
+        if (!timeout) {
+          console.info('restarting')
+          originalEmit(event)
+        }
+
+        else if (typeof timeout !== 'number')
+          throw new Error('Timeout must be a number!')
+        else {
+          console.info('Restarting in ' + timeout)
+          setTimeout(function (){
+            originalEmit(event)
+          }, timeout)
+        }
       }
     }
 
