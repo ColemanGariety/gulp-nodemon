@@ -6,15 +6,15 @@ var nodemon
   , cp      = require('child_process')
   , bus     = require('nodemon/lib/utils/bus')
 
-module.exports = function (options){
+module.exports = function (options) {
   options = options || {};
 
   // plug nodemon
   if (options.nodemon && typeof options.nodemon === 'function') {
-    nodemon = options.nodemon;
+    nodemon = options.nodemon
     delete options.nodemon
   } else {
-    nodemon = require('nodemon');
+    nodemon = require('nodemon')
   }
 
   // Our script
