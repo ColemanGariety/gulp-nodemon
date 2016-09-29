@@ -87,14 +87,14 @@ module.exports = function (options) {
           throw new Error('Event must be a string!')
 
         if (!timeout) {
-          console.info('restarting')
+          console.info('Received event: ' + event)
           originalEmit(event)
         }
 
         else if (typeof timeout !== 'number')
           throw new Error('Timeout must be a number!')
         else {
-          console.info('Restarting in ' + timeout)
+          console.info('Received event: ' + event)
           setTimeout(function (){
             originalEmit(event)
           }, timeout)

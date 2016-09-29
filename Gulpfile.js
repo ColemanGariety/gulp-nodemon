@@ -37,6 +37,7 @@ gulp.task('test', ['lint'], function () {
     .on('restart', 'cssmin')
     .on('crash', function (){
       console.error('\nApplication has crashed!')
+      console.error('Restarting in 3 seconds')
       stream.nodemon.emit('restart', 3000)
     })
 })
