@@ -5,6 +5,7 @@ var nodemon
   , gulp    = require('gulp')
   , cp      = require('child_process')
   , bus     = require('nodemon/lib/utils/bus')
+  , argv    = require('minimist')(process.argv.slice(2))
 
 module.exports = function (options) {
   options = options || {};
@@ -89,7 +90,23 @@ module.exports = function (options) {
     if (typeof tasks === 'string') tasks = [tasks]
     if (tasks.length === 0) return
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
-    cp.spawnSync(process.platform === 'win32' ? 'gulp.cmd' : 'gulp', tasks, { stdio: [0, 1, 2] })
+    var command = resolveRunCommand(tasks)
+    cp.spawnSync(command.cmd, command.args, { stdio: [0, 1, 2] })
+  }
+
+  function resolveRunCommand(tasks) {
+    var args = tasks.slice()
+    args.unshift(process.argv[1])
+    if (argv['require']) args.push('--require', argv['require'])
+    if (argv['gulpfile']) args.push('--gulpfile', argv['gulpfile'])
+    if (argv['cwd']) args.push('--cwd', argv['cwd'])
+    if (argv['color']) args.push('--color')
+    if (argv['no-color']) args.push('--no-color')
+    if (argv['silent']) args.push('--silent')
+    return {
+      cmd: process.argv[0],
+      args: args
+    }
   }
 }
 
