@@ -45,12 +45,16 @@ nodemon({
 ```
 
 What if you want to decouple your build processes by language? Or even by file? Easy, just set the `tasks` option to a function. Gulp-nodemon will pass you the list of changed files and it'll let you return a list of tasks you want run.
+
+*NOTE:* If you manually restart the server (`rs`) this function will receive a `changedFiles === undefined` so check it and return the `tasks` because it expects an array to be returned.
+
 ```js
 nodemon({
   script: './index.js'
 , ext: 'js css'
 , tasks: function (changedFiles) {
     var tasks = []
+    if (!changedFiles) return tasks;
     changedFiles.forEach(function (file) {
       if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
       if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
