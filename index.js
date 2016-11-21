@@ -51,7 +51,7 @@ module.exports = function (options) {
 
   // Forward log messages and stdin
   script.on('log', function (log){
-    nodemonLog(log.message)
+    nodemonLog(log.colour)
   })
 
   // Shim 'on' for use with gulp tasks
@@ -94,5 +94,5 @@ module.exports = function (options) {
 }
 
 function nodemonLog(message){
-  console.log('[' + new Date().toString().split(' ')[4].gray + '] ' + ('[nodemon] ' + message).yellow)
+  console.log('[' + new Date().toString().split(' ')[4].gray + '] ' + message)
 }
