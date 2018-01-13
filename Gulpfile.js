@@ -9,19 +9,20 @@ var gulp    = require('gulp')
 //     .pipe(mocha({ ui: 'bdd' }))
 // })
 
-gulp.task('lint', function (){
+function lint () {
   gulp.src('./*/**.js')
     .pipe(jshint())
-})
+}
+gulp.task('lint', lint)
 
-gulp.task('cssmin', function (){ /* void */
-})
+function cssmin (){ /* void */ }
+gulp.task('cssmin', cssmin)
 
 gulp.task('afterstart', function (){
   console.log('proc has finished restarting!')
 })
 
-gulp.task('test', ['lint'], function () {
+gulp.task('test', gulp.parallel([lint]), function () {
   var stream = nodemon({
       nodemon: require('nodemon')
     , script: './test/server.js'
@@ -34,7 +35,7 @@ gulp.task('test', ['lint'], function () {
   })
 
   stream
-    .on('restart', 'cssmin')
+    .on('restart', cssmin)
     .on('crash', function (){
       console.error('\nApplication has crashed!\n')
       console.error('Restarting in 2 seconds...\n')
