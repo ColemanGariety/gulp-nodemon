@@ -5,6 +5,7 @@ var nodemon
   , gulp    = require('gulp')
   , cp      = require('child_process')
   , bus     = require('nodemon/lib/utils/bus')
+  , path    = require('path')
 
 module.exports = function (options) {
   options = options || {};
@@ -89,7 +90,9 @@ module.exports = function (options) {
     if (typeof tasks === 'string') tasks = [tasks]
     if (tasks.length === 0) return
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
-    cp.spawnSync(process.platform === 'win32' ? 'gulp.cmd' : 'gulp', tasks, { stdio: [0, 1, 2] })
+    var gulpPath = path.join(process.cwd(), 'node_modules/.bin/')
+    var gulpCmd = path.join(gulpPath, process.platform === 'win32' ? 'gulp.cmd' : 'gulp')
+    cp.spawnSync(gulpCmd, tasks, { stdio: [0, 1, 2] });
   }
 }
 
