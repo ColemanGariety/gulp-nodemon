@@ -1,40 +1,32 @@
 var gulp    = require('gulp')
+  , gulpnodemon = require('./index')
   , jshint  = require('gulp-jshint')
-  , nodemon = require('./index')
-//  , path = require('path')
-
-// gulp.task('test', function () {
-//   gulp.src('./test/*-test.js')
-//     .pipe(jshint({ asi: true, laxcomma: true }))
-//     .pipe(mocha({ ui: 'bdd' }))
-// })
+  , nodemon = require('nodemon')
 
 gulp.task('lint', function (){
-  gulp.src('./*/**.js')
+  return gulp.src('./*/**.js')
     .pipe(jshint())
 })
 
-gulp.task('cssmin', function (){ /* void */
-})
-
-gulp.task('afterstart', function (){
+gulp.task('afterrestart', function (cb){
   console.log('proc has finished restarting!')
+  cb();
 })
 
-gulp.task('test', ['lint'], function () {
-  var stream = nodemon({
-      nodemon: require('nodemon')
+gulp.task('test', gulp.series('lint', function (cb) {
+  var stream = gulpnodemon({
+      nodemon: nodemon
     , script: './test/server.js'
     , verbose: true
     , env: {
         'NODE_ENV': 'development'
       }
     , watch: './'
-    , ext: 'js coffee'
+    , ext: 'js'
   })
 
   stream
-    .on('restart', 'cssmin')
+    .on('restart', 'afterrestart')
     .on('crash', function (){
       console.error('\nApplication has crashed!\n')
       console.error('Restarting in 2 seconds...\n')
@@ -42,4 +34,5 @@ gulp.task('test', ['lint'], function () {
         stream.emit('restart')
       }, 2000)
     })
-})
+  cb();
+}))
