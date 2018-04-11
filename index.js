@@ -43,12 +43,21 @@ module.exports = function (options) {
   }
 
   // Capture ^C
-  var exitHandler = function (options){
-    if (options.exit) script.emit('exit')
-    if (options.quit) process.exit(0)
-  }
-  process.once('exit', exitHandler.bind(null, { exit: true }))
-  process.once('SIGINT', exitHandler.bind(null, { quit: true }))
+  process.once('SIGINT', function () {
+    script.emit('quit')
+    script.quitEmitted = true
+  })
+  script.on('exit', function () {
+    // Ignore exit event during restart
+    if (script.quitEmitted) {
+      // Properly signal async completion by calling the callback provided by gulp
+      if (typeof options.done === "function") {
+        options.done()
+      }
+
+      process.exit(0)
+    }
+  })
 
   // Forward log messages and stdin
   script.on('log', function (log){
