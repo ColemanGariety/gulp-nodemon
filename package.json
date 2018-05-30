@@ -1,6 +1,6 @@
 {
   "name": "gulp-nodemon",
-  "version": "3.0.0",
+  "version": "2.4.0",
   "description": "it's gulp + nodemon + convenience",
   "main": "index.js",
   "scripts": {
