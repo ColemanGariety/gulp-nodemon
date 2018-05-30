@@ -3,12 +3,6 @@ var gulp    = require('gulp')
   , nodemon = require('./index')
 //  , path = require('path')
 
-// gulp.task('test', function () {
-//   gulp.src('./test/*-test.js')
-//     .pipe(jshint({ asi: true, laxcomma: true }))
-//     .pipe(mocha({ ui: 'bdd' }))
-// })
-
 gulp.task('lint', function (){
   return gulp.src('./*/**.js')
     .pipe(jshint())
@@ -26,7 +20,7 @@ gulp.task('afterstart', function (done){
 gulp.task('test', gulp.series('lint', function (done){
   var stream = nodemon({
       nodemon: require('nodemon')
-    , script: './test/server.js'
+    , script: './server.js'
     , verbose: true
     , env: {
         'NODE_ENV': 'development'
