@@ -1,6 +1,6 @@
 {
   "name": "gulp-nodemon",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "it's gulp + nodemon + convenience",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/JacksonGariety/gulp-nodemon",
   "dependencies": {
     "gulp": "^4.0.0",
-    "nodemon": "^1.17.2"
+    "nodemon": "^1.17.5"
   },
   "devDependencies": {
     "gulp-jshint": "^2.1.0",

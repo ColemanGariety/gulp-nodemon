@@ -1,7 +1,7 @@
 gulp-nodemon
 ===========
 
-it's gulp + nodemon + convenience
+gulp + nodemon + convenience
 
 ## Install
 
@@ -11,19 +11,20 @@ $ npm install --save-dev gulp-nodemon
 
 ## Usage
 
-gulp-nodemon looks almost exactly like regular nodemon, but it's made for use with gulp tasks.
+gulp-nodemon is almost exactly like regular nodemon, but it's made for use with gulp tasks.
 
 ### **nodemon([options])**
 
-You can pass an object to gulp-nodemon with options [like you would in nodemon config](https://github.com/remy/nodemon#config-files).
+Gulp-nodemon takes an options object [just like the original](https://github.com/remy/nodemon#config-files).
 
 Example below will start `server.js` in `development` mode and watch for changes, as well as watch all `.html` and `.js` files in the directory.
 ```js
-gulp.task('start', function () {
+gulp.task('start', function (done) {
   nodemon({
     script: 'server.js'
   , ext: 'js html'
   , env: { 'NODE_ENV': 'development' }
+  , done: done
   })
 })
 ```
@@ -32,7 +33,7 @@ gulp.task('start', function () {
 
 *NOTE: This feature requires Node v0.12 because of `child_process.spawnSync`.*
 
-Nodemon is powerful but lacks the ability to compile/cleanup code prior to restarting the application... until now! Most build systems can never be complete without compilation, and now it works harmoniously with your nodemon loop.
+Gulp-nodemon can synchronously perform build tasks on restart.
 
 ### **{ tasks: [Array || Function(changedFiles)] }**
 
@@ -93,11 +94,12 @@ gulp.task('lint', function () {
     .pipe(jshint())
 })
 
-gulp.task('develop', function () {
+gulp.task('develop', function (done) {
   var stream = nodemon({ script: 'server.js'
           , ext: 'html js'
           , ignore: ['ignored.js']
           , tasks: ['lint'] })
+          , done: done
 
   stream
       .on('restart', function () {
@@ -123,7 +125,7 @@ gulp.task('pluggable', function() {
 The [bunyan](https://github.com/trentm/node-bunyan/) logger includes a `bunyan` script that beautifies JSON logging when piped to it. Here's how you can you can pipe your output to `bunyan` when using `gulp-nodemon`:
 
 ```js
-gulp.task('run', ['default', 'watch'], function() {
+gulp.task('run', ['default', 'watch'], function(done) {
     var nodemon = require('gulp-nodemon'),
         spawn   = require('child_process').spawn,
         bunyan
@@ -137,7 +139,8 @@ gulp.task('run', ['default', 'watch'], function() {
         ],
         watch:    [paths.etc, paths.src],
         stdout:   false,
-        readable: false
+        readable: false,
+        done: done
     })
     .on('readable', function() {
 
@@ -181,11 +184,12 @@ gulp.task('compile', function () {
   return stream // important for gulp-nodemon to wait for completion
 })
 
-gulp.task('watch', ['compile'], function () {
+gulp.task('watch', ['compile'], function (done) {
   var stream = nodemon({
                  script: 'dist/' // run ES5 code
                , watch: 'src' // watch ES2015 code
                , tasks: ['compile'] // compile synchronously onChange
+               , done: done
                })
 
   return stream

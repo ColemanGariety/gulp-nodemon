@@ -8,21 +8,26 @@ gulp.task('lint', function (){
     .pipe(jshint())
 })
 
-gulp.task('afterrestart', function (cb){
+gulp.task('afterrestart', function (done){
   console.log('proc has finished restarting!')
-  cb();
+  done();
 })
 
-gulp.task('test', gulp.series('lint', function (cb) {
+gulp.task('cssmin', function (done){
+  done();
+})
+
+gulp.task('test', gulp.series('lint', function (done){
   var stream = gulpnodemon({
       nodemon: nodemon
-    , script: './test/server.js'
+    , script: './server.js'
     , verbose: true
     , env: {
         'NODE_ENV': 'development'
       }
     , watch: './'
-    , ext: 'js'
+    , ext: 'js coffee'
+    , done: done
   })
 
   stream
@@ -34,5 +39,4 @@ gulp.task('test', gulp.series('lint', function (cb) {
         stream.emit('restart')
       }, 2000)
     })
-  cb();
 }))
