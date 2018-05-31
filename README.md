@@ -1,7 +1,7 @@
 gulp-nodemon
 ===========
 
-it's gulp + nodemon + convenience
+gulp + nodemon + convenience
 
 ## Install
 
