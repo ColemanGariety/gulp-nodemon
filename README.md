@@ -15,7 +15,7 @@ gulp-nodemon is almost exactly like regular nodemon, but it's made for use with 
 
 ### **nodemon([options])**
 
-Gulp-nodemon takes an options object [just like the original](https://github.com/remy/nodemon#config-files).
+gulp-nodemon takes an options object [just like the original](https://github.com/remy/nodemon#config-files).
 
 Example below will start `server.js` in `development` mode and watch for changes, as well as watch all `.html` and `.js` files in the directory.
 ```js
@@ -33,7 +33,7 @@ gulp.task('start', function (done) {
 
 *NOTE: This feature requires Node v0.12 because of `child_process.spawnSync`.*
 
-Gulp-nodemon can synchronously perform build tasks on restart.
+gulp-nodemon can synchronously perform build tasks on restart.
 
 ### **{ tasks: [Array || Function(changedFiles)] }**
 
@@ -45,7 +45,7 @@ nodemon({
 })
 ```
 
-What if you want to decouple your build processes by language? Or even by file? Easy, just set the `tasks` option to a function. Gulp-nodemon will pass you the list of changed files and it'll let you return a list of tasks you want run.
+What if you want to decouple your build processes by language? Or even by file? Easy, just set the `tasks` option to a function. gulp-nodemon will pass you the list of changed files and it'll let you return a list of tasks you want run.
 
 *NOTE:* If you manually restart the server (`rs`) this function will receive a `changedFiles === undefined` so check it and return the `tasks` because it expects an array to be returned.
 
