@@ -11,11 +11,11 @@ $ npm install --save-dev gulp-nodemon
 
 ## Usage
 
-Gulp-nodemon looks almost exactly like regular nodemon, but it's made for use with gulp tasks.
+Gulp-nodemon is almost exactly like regular nodemon, but it's made for use with gulp tasks.
 
 ### **nodemon([options])**
 
-You can pass an object to gulp-nodemon with options [like you would in nodemon config](https://github.com/remy/nodemon#config-files).
+Gulp-nodemon takes an options object [just like the original](https://github.com/remy/nodemon#config-files).
 
 Example below will start `server.js` in `development` mode and watch for changes, as well as watch all `.html` and `.js` files in the directory.
 ```js
@@ -33,7 +33,7 @@ gulp.task('start', function (done) {
 
 *NOTE: This feature requires Node v0.12 because of `child_process.spawnSync`.*
 
-Nodemon is powerful but lacks the ability to compile/cleanup code prior to restarting the application... until now! Most build systems can never be complete without compilation, and now it works harmoniously with your nodemon loop.
+Gulp-nodemon can synchronously perform build tasks on restart.
 
 ### **{ tasks: [Array || Function(changedFiles)] }**
 
