@@ -1,7 +1,6 @@
 'use strict'
 
 var nodemon
-  , colors  = require('colors')
   , gulp    = require('gulp')
   , cp      = require('child_process')
   , bus     = require('nodemon/lib/utils/bus')

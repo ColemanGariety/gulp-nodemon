@@ -1,25 +1,25 @@
 var gulp    = require('gulp')
+  , gulpnodemon = require('./index')
   , jshint  = require('gulp-jshint')
-  , nodemon = require('./index')
-//  , path = require('path')
+  , nodemon = require('nodemon')
 
 gulp.task('lint', function (){
   return gulp.src('./*/**.js')
     .pipe(jshint())
 })
 
+gulp.task('afterrestart', function (done){
+  console.log('proc has finished restarting!')
+  done();
+})
+
 gulp.task('cssmin', function (done){
   done();
 })
 
-gulp.task('afterstart', function (done){
-  console.log('proc has finished restarting!');
-  done();
-})
-
 gulp.task('test', gulp.series('lint', function (done){
-  var stream = nodemon({
-      nodemon: require('nodemon')
+  var stream = gulpnodemon({
+      nodemon: nodemon
     , script: './server.js'
     , verbose: true
     , env: {
@@ -31,7 +31,7 @@ gulp.task('test', gulp.series('lint', function (done){
   })
 
   stream
-    .on('restart', 'cssmin')
+    .on('restart', 'afterrestart')
     .on('crash', function (){
       console.error('\nApplication has crashed!\n')
       console.error('Restarting in 2 seconds...\n')

@@ -11,7 +11,7 @@ $ npm install --save-dev gulp-nodemon
 
 ## Usage
 
-Gulp-nodemon is almost exactly like regular nodemon, but it's made for use with gulp tasks.
+gulp-nodemon is almost exactly like regular nodemon, but it's made for use with gulp tasks.
 
 ### **nodemon([options])**
 
@@ -84,7 +84,7 @@ gulp-nodemon returns a stream just like any other NodeJS stream, **except for th
 The following example will run your code with nodemon, lint it when you make changes, and log a message when nodemon runs it again.
 
 ```js
-// Gulpfile.js
+// gulpfile.js
 var gulp = require('gulp')
   , nodemon = require('gulp-nodemon')
   , jshint = require('gulp-jshint')
@@ -163,7 +163,7 @@ gulp.task('run', ['default', 'watch'], function(done) {
 
 ## Using `gulp-nodemon` with React, Browserify, Babel, ES2015, etc.
 
-Gulp-nodemon is made to work with the "groovy" new tools like Babel, JSX, and other JavaScript compilers/bundlers/transpilers.
+gulp-nodemon is made to work with the "groovy" new tools like Babel, JSX, and other JavaScript compilers/bundlers/transpilers.
 
 In gulp-nodemon land, you'll want one task for compilation that uses an on-disk cache (e.g. `gulp-file-cache`, `gulp-cache-money`) along with your bundler (e.g. `gulp-babel`, `gulp-react`, etc.). Then you'll put `nodemon({})` in another task and pass the entire compile task in your config:
 
