@@ -1,7 +1,7 @@
-const http = require('http')
+const http = require('http');
 
-const port     = 8000
-const hostname = '0.0.0.0'
+const port     = 8000;
+const hostname = '0.0.0.0';
 
 
 http.createServer((req, res) => res.end(`
@@ -11,4 +11,4 @@ It's ${
     } here, how is it going back there in ${new Date().getFullYear()}? :)
 
 `))
-  .listen(port, hostname, () => console.info(`listening on http://${hostname}:${port}`))
+  .listen(port, hostname, () => console.info(`listening on http://${hostname}:${port}`));
