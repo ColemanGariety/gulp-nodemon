@@ -10,18 +10,20 @@ var gulp    = require('gulp')
 // })
 
 gulp.task('lint', function (){
-  gulp.src('./*/**.js')
+  return gulp.src('./*/**.js')
     .pipe(jshint())
 })
 
-gulp.task('cssmin', function (){ /* void */
+gulp.task('cssmin', function (done){
+  done();
 })
 
-gulp.task('afterstart', function (){
-  console.log('proc has finished restarting!')
+gulp.task('afterstart', function (done){
+  console.log('proc has finished restarting!');
+  done();
 })
 
-gulp.task('test', ['lint'], function () {
+gulp.task('test', gulp.series('lint', function (done){
   var stream = nodemon({
       nodemon: require('nodemon')
     , script: './test/server.js'
@@ -31,6 +33,7 @@ gulp.task('test', ['lint'], function () {
       }
     , watch: './'
     , ext: 'js coffee'
+    , done: done
   })
 
   stream
@@ -42,4 +45,4 @@ gulp.task('test', ['lint'], function () {
         stream.emit('restart')
       }, 2000)
     })
-})
+}))
