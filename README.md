@@ -21,10 +21,10 @@ Example below will start `server.js` in `development` mode and watch for changes
 ```js
 gulp.task('start', function (done) {
   nodemon({
-    script: 'server.js'
-  , ext: 'js html'
-  , env: { 'NODE_ENV': 'development' }
-  , done: done
+    script: 'server.js', 
+    ext: 'js html', 
+    env: { 'NODE_ENV': 'development' }, 
+    done
   })
 })
 ```
@@ -40,8 +40,8 @@ Gulp-nodemon can synchronously perform build tasks on restart.
 If you want to lint your code when you make changes that's easy to do with a simple event. But what if you need to wait while your project re-builds before you start it up again? This isn't possible with vanilla nodemon, and can be tedious to implement yourself, but it's easy with gulp-nodemon:
 ```js
 nodemon({
-  script: 'index.js'
-, tasks: ['browserify']
+  script: 'index.js', 
+  tasks: ['browserify']
 })
 ```
 
@@ -51,14 +51,20 @@ What if you want to decouple your build processes by language? Or even by file? 
 
 ```js
 nodemon({
-  script: './index.js'
-, ext: 'js css'
-, tasks: function (changedFiles) {
+  script: './index.js', 
+  ext: 'js css', 
+  tasks: function (changedFiles) {
     var tasks = []
-    if (!changedFiles) return tasks;
-    changedFiles.forEach(function (file) {
-      if (path.extname(file) === '.js' && !~tasks.indexOf('lint')) tasks.push('lint')
-      if (path.extname(file) === '.css' && !~tasks.indexOf('cssmin')) tasks.push('cssmin')
+    if ( ! changedFiles ) {
+      return tasks;
+    }
+    changedFiles.forEach(function (changedFile) {
+      if (path.extname(changedFile) === '.js' &! tasks.includes('lint') ) {
+        tasks.push('lint')
+      }
+      if (path.extname(changedFile) === '.css' &! tasks.includes('cssmin') ) {
+        tasks.push('cssmin')
+      }
     })
     return tasks
   }
@@ -85,38 +91,43 @@ The following example will run your code with nodemon, lint it when you make cha
 
 ```js
 // Gulpfile.js
-var gulp = require('gulp')
-  , nodemon = require('gulp-nodemon')
-  , jshint = require('gulp-jshint')
+var gulp = require('gulp'), 
+  nodemon = require('gulp-nodemon'), 
+  jshint = require('gulp-jshint')
 
 gulp.task('lint', function () {
-  gulp.src('./**/*.js')
+  gulp
+    .src('./**/*.js')
     .pipe(jshint())
 })
 
 gulp.task('develop', function (done) {
-  var stream = nodemon({ script: 'server.js'
-          , ext: 'html js'
-          , ignore: ['ignored.js']
-          , tasks: ['lint'] })
-          , done: done
+  var stream = nodemon({ 
+    script: 'server.js', 
+    ext: 'html js', 
+    ignore: ['ignored.js'], 
+    tasks: ['lint'], 
+    done 
+  })  
 
   stream
-      .on('restart', function () {
-        console.log('restarted!')
-      })
-      .on('crash', function() {
-        console.error('Application has crashed!\n')
-         stream.emit('restart', 10)  // restart the server in 10 seconds
-      })
+    .on('restart', function () {
+      console.log('restarted!')
+    })
+    .on('crash', function() {
+      console.error('Application has crashed!\n')
+        stream.emit('restart', 10)  // restart the server in 10 seconds
+    })
 })
 ```
 
 _**You can also plug an external version or fork of nodemon**_
 ```js
 gulp.task('pluggable', function() {
-  nodemon({ nodemon: require('nodemon'),
-            script: 'server.js'})
+  nodemon({ 
+    nodemon: require('nodemon'),
+    script: 'server.js'
+  })
 })
 ```
 
@@ -126,38 +137,34 @@ The [bunyan](https://github.com/trentm/node-bunyan/) logger includes a `bunyan` 
 
 ```js
 gulp.task('run', ['default', 'watch'], function(done) {
-    var nodemon = require('gulp-nodemon'),
-        spawn   = require('child_process').spawn,
-        bunyan
+  var nodemon = require('gulp-nodemon'),
+    spawn= require('child_process').spawn,
+    bunyan
 
-    nodemon({
-        script: paths.server,
-        ext:    'js json',
-        ignore: [
-            'var/',
-            'node_modules/'
-        ],
-        watch:    [paths.etc, paths.src],
-        stdout:   false,
-        readable: false,
-        done: done
-    })
-    .on('readable', function() {
+  nodemon({
+    script: paths.server,
+    ext:    'js json',
+    ignore: ['var/', 'node_modules/'],
+    watch: [paths.etc, paths.src],
+    stdout: false,
+    readable: false,
+    done
+  })
+  .on('readable', function() {
 
-        // free memory
-        bunyan && bunyan.kill()
+    // free memory
+    bunyan && bunyan.kill()
 
-        bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
-            '--output', 'short',
-            '--color'
-        ])
+    bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
+      '--output', 'short', '--color'
+    ])
 
-        bunyan.stdout.pipe(process.stdout)
-        bunyan.stderr.pipe(process.stderr)
+    bunyan.stdout.pipe(process.stdout)
+    bunyan.stderr.pipe(process.stderr)
 
-        this.stdout.pipe(bunyan.stdin)
-        this.stderr.pipe(bunyan.stdin)
-    });
+    this.stdout.pipe(bunyan.stdin)
+    this.stderr.pipe(bunyan.stdin)
+  });
 })
 ```
 
@@ -168,30 +175,29 @@ Gulp-nodemon is made to work with the "groovy" new tools like Babel, JSX, and ot
 In gulp-nodemon land, you'll want one task for compilation that uses an on-disk cache (e.g. `gulp-file-cache`, `gulp-cache-money`) along with your bundler (e.g. `gulp-babel`, `gulp-react`, etc.). Then you'll put `nodemon({})` in another task and pass the entire compile task in your config:
 
 ```js
-var gulp = require('gulp')
-  , nodemon = require('gulp-nodemon')
-  , babel = require('gulp-babel')
-  , Cache = require('gulp-file-cache')
+var gulp = require('gulp'), 
+  nodemon = require('gulp-nodemon'), 
+  babel = require('gulp-babel'), 
+  Cache = require('gulp-file-cache')
 
 var cache = new Cache();
 
 gulp.task('compile', function () {
   var stream = gulp.src('./src/**/*.js') // your ES2015 code
-                   .pipe(cache.filter()) // remember files
-                   .pipe(babel({ ... })) // compile new ones
-                   .pipe(cache.cache()) // cache them
-                   .pipe(gulp.dest('./dist')) // write them
+    .pipe(cache.filter()) // remember files
+    .pipe(babel({ ... })) // compile new ones
+    .pipe(cache.cache()) // cache them
+    .pipe(gulp.dest('./dist')) // write them
   return stream // important for gulp-nodemon to wait for completion
 })
 
 gulp.task('watch', ['compile'], function (done) {
   var stream = nodemon({
-                 script: 'dist/' // run ES5 code
-               , watch: 'src' // watch ES2015 code
-               , tasks: ['compile'] // compile synchronously onChange
-               , done: done
-               })
-
+    script: 'dist/', // run ES5 code
+    watch: 'src', // watch ES2015 code
+    tasks: ['compile'], // compile synchronously onChange
+    done
+  })
   return stream
 })
 ```

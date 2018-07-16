@@ -1,7 +1,6 @@
-var gulp    = require('gulp')
-  , jshint  = require('gulp-jshint')
-  , nodemon = require('./index')
-//  , path = require('path')
+var gulp    = require('gulp'),
+  jshint  = require('gulp-jshint'),
+  nodemon = require('./index')
 
 gulp.task('lint', function (){
   return gulp.src('./*/**.js')
@@ -9,25 +8,24 @@ gulp.task('lint', function (){
 })
 
 gulp.task('cssmin', function (done){
-  done();
+  done()
 })
 
 gulp.task('afterstart', function (done){
   console.log('proc has finished restarting!');
-  done();
+  done()
 })
 
 gulp.task('test', gulp.series('lint', function (done){
   var stream = nodemon({
-      nodemon: require('nodemon')
-    , script: './server.js'
-    , verbose: true
-    , env: {
-        'NODE_ENV': 'development'
-      }
-    , watch: './'
-    , ext: 'js coffee'
-    , done: done
+    nodemon: require('nodemon'),
+    script: './server.js',
+    verbose: true, env: {
+      'NODE_ENV': 'development'
+    },
+    watch: './',
+    ext: 'js coffee',
+    done
   })
 
   stream
