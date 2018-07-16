@@ -39,8 +39,5 @@
     "gulp-mocha": "^6.0.0",
     "is-running": "^1.0.3",
     "coffeescript": "^2.3.1"
-  },
-  "directories": {
-    "test": "test"
   }
 }
