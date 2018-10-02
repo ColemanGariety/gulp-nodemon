@@ -1,5 +1,6 @@
 'use strict'
 
+var debounce = require('lodash.debounce')
 var nodemon
   , colors  = require('colors')
   , gulp    = require('gulp')
@@ -28,12 +29,22 @@ module.exports = function (options) {
     // Remove all 'restart' listeners
     bus.removeAllListeners('restart')
 
-    // Place our listener in first position
-    bus.on('restart', function (files){
+    // debounce because 'restart' event fires once for each file.
+    // run() cannot be converted to debounce function because
+    // run() must be synchronous.
+    var debounceFiles = []
+    var debounceRunTasks = debounce(function() {
+      var files = debounceFiles.slice()
+      debounceFiles = []
       if (!options.quiet) nodemonLog('running tasks...')
-
       if (typeof options.tasks === 'function') run(options.tasks(files))
       else run(options.tasks)
+    }, 100)
+
+    // Place our listener in first position
+    bus.on('restart', function (files){
+      debounceFiles = debounceFiles.concat(files)
+      debounceRunTasks()
     })
 
     // Re-add all other listeners
