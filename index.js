@@ -101,7 +101,9 @@ module.exports = function (options) {
     if (!(tasks instanceof Array)) throw new Error('Expected task name or array but found: ' + tasks)
     var gulpPath = path.join(process.cwd(), 'node_modules/.bin/')
     var gulpCmd = path.join(gulpPath, process.platform === 'win32' ? 'gulp.cmd' : 'gulp')
-    cp.spawnSync(gulpCmd, tasks, { stdio: [0, 1, 2] });
+    var options = { stdio: [0, 1, 2] }
+    if (process.platform === 'win32') options.shell = true
+    cp.spawnSync(gulpCmd, tasks, options)
   }
 }
 
