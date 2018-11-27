@@ -29,16 +29,16 @@
   "homepage": "https://github.com/JacksonGariety/gulp-nodemon",
   "dependencies": {
     "colors": "^1.2.1",
-    "event-stream": "^3.3.4",
+    "event-stream": "^4.0.1",
     "gulp": "^4.0.0",
     "nodemon": "^1.17.5"
   },
   "devDependencies": {
-    "should": "^4.0.0",
-    "gulp-jshint": "^1.6.1",
-    "gulp-mocha": "^0.2.0",
-    "is-running": "^1.0.3",
-    "coffee-script": "^1.7.1"
+    "coffee-script": "^1.7.1",
+    "gulp-jshint": "^2.1.0",
+    "gulp-mocha": "^6.0.0",
+    "is-running": "^2.1.0",
+    "should": "^13.2.3"
   },
   "directories": {
     "test": "test"
