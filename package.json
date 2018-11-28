@@ -29,7 +29,6 @@
   "homepage": "https://github.com/JacksonGariety/gulp-nodemon",
   "dependencies": {
     "colors": "^1.2.1",
-    "event-stream": "^4.0.1",
     "gulp": "^4.0.0",
     "nodemon": "^1.18.7"
   },
