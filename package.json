@@ -30,7 +30,7 @@
   "dependencies": {
     "colors": "^1.2.1",
     "gulp": "^4.0.0",
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.18.7"
   },
   "devDependencies": {
     "should": "^4.0.0",
