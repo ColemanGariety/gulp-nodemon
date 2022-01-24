@@ -33,10 +33,8 @@ gulp.task('test', gulp.series('lint', function (done){
   stream
     .on('restart', 'cssmin')
     .on('crash', function (){
-      console.error('\nApplication has crashed!\n')
-      console.error('Restarting in 2 seconds...\n')
-      setTimeout(function () {
-        stream.emit('restart')
-      }, 2000)
+      console.error('\nApplication has crashed!')
+      console.error('Restarting in 3 seconds')
+      stream.nodemon.emit('restart', 3000)
     })
 }))
